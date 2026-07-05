@@ -24,6 +24,14 @@ export default function RootLayout({ children }) {
         <header className="app-header">
           <div className="header-container">
             <span className="header-title">Welcome to the Products Store</span>
+            <nav className="nav-links">
+              <Link href="/" className="nav-link">
+                Home
+              </Link>
+              <Link href="/products" className="nav-link">
+                Products
+              </Link>
+            </nav>
           </div>
         </header>
 

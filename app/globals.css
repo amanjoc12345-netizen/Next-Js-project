@@ -60,7 +60,7 @@ a {
   margin: 0 auto;
   padding: 1.25rem 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -69,6 +69,22 @@ a {
   font-weight: 500;
   color: var(--text-primary);
   letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
 }
 
 /* Main Content Area */
