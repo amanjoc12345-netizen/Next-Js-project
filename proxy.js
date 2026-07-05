@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyToken } from "./lib/auth";
+import { auth } from "./auth";
 
 /**
  * Route interceptor (Proxy) to protect dashboard routes and redirect
@@ -10,13 +10,12 @@ import { verifyToken } from "./lib/auth";
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
-  // Retrieve token from request cookies
-  const token = request.cookies.get("auth_token")?.value;
-  const decoded = await verifyToken(token);
+  // Retrieve session using Auth.js auth helper
+  const session = await auth();
 
-  // If path is under /dashboard and user is not verified, redirect to /login
+  // If path is under /dashboard and user is not authenticated, redirect to /login
   if (pathname.startsWith("/dashboard")) {
-    if (!decoded) {
+    if (!session) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
@@ -25,7 +24,7 @@ export async function proxy(request) {
 
   // If path is /login and user is already logged in, redirect to /dashboard
   if (pathname === "/login") {
-    if (decoded) {
+    if (session) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }
   }
