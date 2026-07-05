@@ -31,15 +31,29 @@ export default async function ProductDetailsPage({ params }) {
         </div>
       ) : product ? (
         <div className="framed-details-box" style={{ maxWidth: "650px", textAlign: "left" }}>
-          {product.thumbnail && (
-            <div className="detail-image-wrapper" style={{ width: "100%", height: "250px", overflow: "hidden", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-color)", marginBottom: "1.5rem", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "var(--bg-color)" }}>
+          
+          {/* Static File from Public Directory & Dynamic API Thumbnail */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+            <div className="detail-image-wrapper" style={{ height: "180px", overflow: "hidden", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-color)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "var(--bg-color)", padding: "0.5rem" }}>
               <img 
-                src={product.thumbnail} 
-                alt={product.title} 
-                style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }} 
+                src="/product-placeholder.png" 
+                alt="Static Local Reference" 
+                style={{ maxHeight: "140px", maxWidth: "100%", objectFit: "contain", borderRadius: "var(--radius-md)" }} 
               />
+              <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "0.5rem", display: "block" }}>Static File (Public)</span>
             </div>
-          )}
+            
+            {product.thumbnail && (
+              <div className="detail-image-wrapper" style={{ height: "180px", overflow: "hidden", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-color)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "var(--bg-color)", padding: "0.5rem" }}>
+                <img 
+                  src={product.thumbnail} 
+                  alt={product.title} 
+                  style={{ maxHeight: "140px", maxWidth: "100%", objectFit: "contain" }} 
+                />
+                <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "0.5rem", display: "block" }}>Dynamic File (API)</span>
+              </div>
+            )}
+          </div>
 
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
             <span style={{ fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", fontWeight: 600 }}>
