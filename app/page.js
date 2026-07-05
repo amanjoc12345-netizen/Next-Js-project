@@ -1,7 +1,7 @@
 import HomePageClient from "./HomePageClient";
 
 export const metadata = {
-  title: "This is Homepage",
+  title: "Products Store - Home",
   description: "Welcome to Nexis OS, a premium digital commerce and catalog management platform.",
 };
 

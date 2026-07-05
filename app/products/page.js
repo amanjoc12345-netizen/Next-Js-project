@@ -1,5 +1,10 @@
 import ProductsClient from "@/components/ProductsClient";
 
+export const metadata = {
+  title: "Products Store - Products List",
+  description: "Explore our comprehensive list of premium products and catalogs.",
+};
+
 /**
  * Products Catalog Page (Server Component).
  * Fetches products list on the server and feeds it to ProductsClient.
