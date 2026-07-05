@@ -25,9 +25,7 @@ export default function Footer() {
               Nexis OS
             </span>
           </div>
-          <p className="footer-desc">
-            A premium full-stack catalog manager and digital storefront platform built on the latest Next.js architectures.
-          </p>
+
           <div className="footer-social-row">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon" aria-label="GitHub">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
