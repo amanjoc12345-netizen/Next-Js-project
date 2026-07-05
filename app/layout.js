@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/lib/auth";
+import { logoutAction } from "@/app/actions/auth";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,7 +20,12 @@ export const metadata = {
   description: "A state-of-the-art ecommerce catalog built with Next.js",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth_token")?.value;
+  const decoded = await verifyToken(token);
+  const isAuthenticated = !!decoded;
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
@@ -31,13 +39,40 @@ export default function RootLayout({ children }) {
               />
               <span className="header-title">Welcome to the Products Store</span>
             </Link>
-            <nav className="nav-links">
+            <nav className="nav-links" style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
               <Link href="/" className="nav-link">
                 Home
               </Link>
               <Link href="/products" className="nav-link">
                 Products
               </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href="/dashboard" className="nav-link">
+                    Dashboard
+                  </Link>
+                  <form action={logoutAction} style={{ display: "inline" }}>
+                    <button 
+                      type="submit" 
+                      className="nav-link" 
+                      style={{ 
+                        background: "none", 
+                        border: "none", 
+                        cursor: "pointer", 
+                        padding: 0, 
+                        font: "inherit",
+                        color: "var(--text-secondary)"
+                      }}
+                    >
+                      Sign Out
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <Link href="/login" className="nav-link" style={{ color: "var(--text-primary)", fontWeight: "600" }}>
+                  Sign In
+                </Link>
+              )}
             </nav>
           </div>
         </header>
@@ -55,6 +90,15 @@ export default function RootLayout({ children }) {
               <Link href="/products" className="footer-link">
                 Products
               </Link>
+              {isAuthenticated ? (
+                <Link href="/dashboard" className="footer-link">
+                  Dashboard
+                </Link>
+              ) : (
+                <Link href="/login" className="footer-link">
+                  Sign In
+                </Link>
+              )}
             </nav>
             <p className="footer-copyright">© {new Date().getFullYear()} Products Store. All rights reserved.</p>
           </div>
@@ -63,3 +107,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
