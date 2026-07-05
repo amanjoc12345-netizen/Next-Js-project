@@ -23,7 +23,14 @@ export default function RootLayout({ children }) {
       <body>
         <header className="app-header">
           <div className="header-container">
-            <span className="header-title">Welcome to the Products Store</span>
+            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none", color: "inherit" }}>
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                style={{ height: "28px", width: "28px", objectFit: "contain", borderRadius: "4px" }} 
+              />
+              <span className="header-title">Welcome to the Products Store</span>
+            </Link>
             <nav className="nav-links">
               <Link href="/" className="nav-link">
                 Home
