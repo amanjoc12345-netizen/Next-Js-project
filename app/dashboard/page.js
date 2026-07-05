@@ -1,69 +1,13 @@
 import { auth } from "@/auth";
-import SignOutButton from "@/components/SignOutButton";
+import DashboardClient from "@/components/DashboardClient";
 
 /**
- * Protected Dashboard Page.
- * Server component retrieving user session from Auth.js auth helper.
+ * Protected Dashboard Page (Server Component).
+ * Fetches the user session on the server side and feeds it to the high-fidelity
+ * interactive client dashboard.
  */
 export default async function DashboardPage() {
   const session = await auth();
-  const username = session?.user?.name || "Admin User";
 
-  return (
-    <div className="dashboard-container">
-      <div className="catalog-header" style={{ marginBottom: "2.5rem" }}>
-        <h1 className="catalog-title">User Dashboard</h1>
-        <p className="catalog-description">
-          Welcome back, <strong style={{ color: "var(--text-primary)" }}>{username}</strong>! Here is an overview of your store statistics and system status.
-        </p>
-      </div>
-
-      {/* Premium dashboard cards showing store statistics */}
-      <div className="dashboard-grid">
-        <div className="stat-card">
-          <span className="stat-title">Total Sales</span>
-          <span className="stat-value">$14,248.50</span>
-          <span className="stat-desc">↑ 12.5% vs last month</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-title">Active Sessions</span>
-          <span className="stat-value">342</span>
-          <span className="stat-desc">Currently online visitors</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-title">Conversion Rate</span>
-          <span className="stat-value">3.24%</span>
-          <span className="stat-desc">↑ 0.4% increase</span>
-        </div>
-        <div className="stat-card">
-          <span className="stat-title">Active Promotions</span>
-          <span className="stat-value">4</span>
-          <span className="stat-desc">Coupon campaigns active</span>
-        </div>
-      </div>
-
-      {/* Security details card */}
-      <div className="stat-card" style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <h2 style={{ fontSize: "1.25rem", fontWeight: "600", color: "var(--text-primary)" }}>NextAuth.js Session Check</h2>
-        <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: "1.5" }}>
-          This route is fully protected using Next.js 16 <code>proxy.js</code>. The session details are read directly using the <code>auth()</code> helper in our Server Component.
-        </p>
-        
-        <div style={{ backgroundColor: "var(--bg-color)", padding: "1.25rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", fontFamily: "var(--font-geist-mono)", fontSize: "0.85rem", overflowX: "auto" }}>
-          <div style={{ color: "#4ade80", marginBottom: "0.5rem" }}>Session Status: Authenticated ✅</div>
-          <div style={{ color: "var(--text-secondary)" }}>Active Session:</div>
-          <pre style={{ margin: "0.25rem 0 0 0", color: "var(--text-primary)" }}>
-            {JSON.stringify(session, null, 2)}
-          </pre>
-        </div>
-      </div>
-
-      <div className="dashboard-actions">
-        <span style={{ fontSize: "0.9rem", color: "var(--text-secondary)" }}>
-          Signed in as <code style={{ fontFamily: "var(--font-geist-mono)", color: "var(--text-primary)" }}>{username}</code>
-        </span>
-        <SignOutButton />
-      </div>
-    </div>
-  );
+  return <DashboardClient session={session} />;
 }

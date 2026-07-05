@@ -1,8 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
-import { auth } from "@/auth";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Providers } from "@/components/Providers";
-import HeaderSignOut from "@/components/HeaderSignOut";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,81 +15,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Premium Products Store",
-  description: "A state-of-the-art ecommerce catalog built with Next.js",
+  title: "Nexis OS - Premium SaaS Storefront & Catalog Management",
+  description: "A state-of-the-art digital storefront catalog and dashboard system.",
 };
 
-export default async function RootLayout({ children }) {
-  const session = await auth();
-  const isAuthenticated = !!session;
-
+/**
+ * Root Layout Component.
+ * Integrates client Providers, central Navbar, and structural Footer.
+ * Configures modern dynamic SVG Favicon and imports typography fonts.
+ */
+export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        {/* Dynamic High-Quality SVG Favicon rendering the Nexis OS logo */}
+        <link 
+          rel="icon" 
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%236366f1%22/><path d=%22M50 25 L20 40 L50 55 L80 40 Z M20 60 L50 75 L80 60 M20 50 L50 65 L80 50%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%228%22 stroke-linejoin=%22round%22 stroke-linecap=%22round%22/></svg>" 
+        />
+      </head>
       <body>
         <Providers>
-          <header className="app-header">
-            <div className="header-container">
-              <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none", color: "inherit" }}>
-                <img 
-                  src="/logo.png" 
-                  alt="Logo" 
-                  style={{ height: "28px", width: "28px", objectFit: "contain", borderRadius: "4px" }} 
-                />
-                <span className="header-title">Welcome to the Products Store</span>
-              </Link>
-              <nav className="nav-links" style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-                <Link href="/" className="nav-link">
-                  Home
-                </Link>
-                <Link href="/products" className="nav-link">
-                  Products
-                </Link>
-                {isAuthenticated ? (
-                  <>
-                    <Link href="/dashboard" className="nav-link">
-                      Dashboard
-                    </Link>
-                    <HeaderSignOut />
-                  </>
-                ) : (
-                  <Link href="/login" className="nav-link" style={{ color: "var(--text-primary)", fontWeight: "600" }}>
-                    Sign In
-                  </Link>
-                )}
-              </nav>
-            </div>
-          </header>
-
+          <Navbar />
           <main className="main-content">
             {children}
           </main>
-
-          <footer className="app-footer">
-            <div className="footer-container">
-              <nav className="footer-nav">
-                <Link href="/" className="footer-link">
-                  Home
-                </Link>
-                <Link href="/products" className="footer-link">
-                  Products
-                </Link>
-                {isAuthenticated ? (
-                  <Link href="/dashboard" className="footer-link">
-                    Dashboard
-                  </Link>
-                ) : (
-                  <Link href="/login" className="footer-link">
-                    Sign In
-                  </Link>
-                )}
-              </nav>
-              <p className="footer-copyright">© {new Date().getFullYear()} Products Store. All rights reserved.</p>
-            </div>
-          </footer>
+          <Footer />
         </Providers>
       </body>
     </html>
   );
 }
-
-
