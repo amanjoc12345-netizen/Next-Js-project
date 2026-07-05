@@ -146,14 +146,39 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
+
+              {/* Direct Logout Button in Header */}
+              <button 
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="btn btn-secondary"
+                style={{ 
+                  padding: "0.5rem 1rem", 
+                  fontSize: "0.85rem", 
+                  display: "inline-flex", 
+                  alignItems: "center", 
+                  gap: "0.4rem",
+                  cursor: "pointer",
+                  height: "36px"
+                }}
+              >
+                <LogOut size={14} />
+                Logout
+              </button>
             </>
           ) : (
             <Link 
               href="/login" 
               className="btn btn-primary" 
-              style={{ padding: "0.5rem 1rem", fontSize: "0.85rem" }}
+              style={{ 
+                padding: "0.5rem 1rem", 
+                fontSize: "0.85rem", 
+                display: "inline-flex", 
+                alignItems: "center", 
+                height: "36px",
+                justifyContent: "center" 
+              }}
             >
-              Sign In
+              Login
             </Link>
           )}
         </nav>

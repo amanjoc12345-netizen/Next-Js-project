@@ -18,7 +18,7 @@ function LoginForm() {
   const searchParams = useSearchParams();
   
   // Retrieve target redirect path from params safely
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl = searchParams.get("callbackUrl") || "/products";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

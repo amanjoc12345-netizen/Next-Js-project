@@ -13,8 +13,8 @@ export async function proxy(request) {
   // Retrieve session using Auth.js auth helper
   const session = await auth();
 
-  // If path is under /dashboard and user is not authenticated, redirect to /login
-  if (pathname.startsWith("/dashboard")) {
+  // If path is under /dashboard or /products and user is not authenticated, redirect to /login
+  if (pathname.startsWith("/dashboard") || pathname === "/products" || pathname.startsWith("/products/")) {
     if (!session) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
@@ -22,10 +22,10 @@ export async function proxy(request) {
     }
   }
 
-  // If path is /login and user is already logged in, redirect to /dashboard
+  // If path is /login and user is already logged in, redirect to /products
   if (pathname === "/login") {
     if (session) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/products", request.url));
     }
   }
 
@@ -34,5 +34,5 @@ export async function proxy(request) {
 
 // Config to specify matching routes for the proxy
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/dashboard/:path*", "/products/:path*", "/products", "/login"],
 };
